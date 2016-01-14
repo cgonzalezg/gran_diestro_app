@@ -1,0 +1,12 @@
+<ion-view title="Rutas">
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+        <ion-list>
+            <ion-item class="item-thumbnail" ng-repeat="ruta in rutas" href="#/side-menu21/descripcion/{{ruta.id}}">
+                <img ng-src="{{ruta.desnivel}}">
+                <h2>{{ruta.name}}</h2>
+                <p>{{ruta.distance}} m</p>
+                <p>{{ruta.dificultad}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
