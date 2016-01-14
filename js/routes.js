@@ -80,14 +80,26 @@ angular.module('app.routes', [])
         controller: 'mapaCtrl',
         resolve: {
           ruta: function($stateParams, Norte) {
-            console.log('mierda mapa');
             return Norte.get($stateParams.id);
           }
         }
       }
     }
   })
-
+  .state('menu.desnivel', {
+    url: '/desnivel/:id',
+    views: {
+      'side-menu21': {
+        templateUrl: 'templates/desnivel.html',
+        controller: 'desnivelCtrl',
+        resolve: {
+          ruta: function($stateParams, Norte) {
+            return Norte.get($stateParams.id);
+          }
+        }
+      }
+    }
+  })
   .state('menu.descripcion', {
     url: '/descripcion/:id',
     views: {
@@ -96,7 +108,6 @@ angular.module('app.routes', [])
         controller: 'descripcionCtrl',
         resolve: {
           ruta: function($stateParams, Norte) {
-            console.log('mierda');
             return Norte.get($stateParams.id);
           }
         }

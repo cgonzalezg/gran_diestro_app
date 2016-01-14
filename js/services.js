@@ -30,27 +30,28 @@ angular.module('app.services', [])
       }, {
         "id": 2,
         "inicio": {
-          "name": "Comienzo Ruta senderista",
+          "name": "Puerta principal del castillo",
           "cordinates": [40.353021, -3.924219]
         },
         "fin": {
-          "name": "Comienzo Ruta senderista",
+          "name": "Puerta principal del castillo",
           "cordinates": [0, 0]
         },
         "ruta":"https://docs.google.com/uc?export=download&id=0B4ClGv_KOK5bZW1fSU9ZZ2swT2MwQ0phcW1tU2hiQWxUTnpr",
-        "distance": 8330,
+        "distance": 8000,
         "dificultad": "Moderada-dificil",
-        "name": "Las dos sierras",
-        "perfil": "Muy irregular, destacando la cuesta del Guadarrama a \"El Monreal\"",
-        "superficie": "100 camino",
-        "desnivel": "img/desnivel_2.png",
+        "name": "Ruta del Castillo",
+        "perfil": "Irregular, destacan dos subidas bastante pronunciadas.",
+        "superficie": "100% camino excepto 180m de asfalto.",
+        "desnivel": "img/desnivel_3.png",
+        "desnivel_thumpnail": "img/desnivel_thumpnail_3.png",
+
         "mapa": "img/mapa_1.png",
-        "observaciones": "Magnífica ruta que pondrá a prueba nuestro aguante en las cuestas . Rodaremos por el singular paraje natural de ?El Monreal?y por la zona del río Guadarrama , que forma parte del Parque Regional del Curso Medio del río Guadarrama y su entorno .Destacan las vistas de la Sierra de Guadarrama y las estribaciones de Gredos que, mezcladas con el atardecer, serán un regalo para nuestra retina. Para llegar a esta ruta debemos partir desde la calle Cueva de la Mora y cruzar el puente de la carretera M-506. Al cruzarlo encontraremos una bifurcación donde están los carteles informativos de las rutas del Parque Regional . En este punto tomaremos el camino de la derecha y comenzaremos el circuito. El punto de agua más accesible está situado junto al parque canino localizado en el anillo ciclista."
+        "observaciones": "Ruta circular muy recomendable ya que su punto de partida está cercano a la zona urbana y en él se encuentra la Fuente de los Caños donde podremos hidratarnos al finalizar la sesión . Su característica principal son las cuestas pronunciadas que tiene, destacando la del comienzo y la del sexto kilómetro. Es importante destacar las impresionantes vistas de la Sierra de Guadarrama donde ,en días claros, podremos diferenciar algunas de las cimas emblemáticas de la sierra madrileña. Para comenzar esta ruta debemos llegar a la intersección de la calle López Puigcerver y el camino de los Testerales , lugar donde se encuentran la puerta principal del castillo, la fuente de los caños y el cuartel de la guardia civil. Llegados a este punto iniciaremos la ruta. El punto de agua más accesible es la Fuente de los Caños."
       }
+    ]
 
-
-
-    ];
+;
 
     return {
       all: function() {

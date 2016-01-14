@@ -49,4 +49,8 @@ angular.module('app.controllers', [])
 
 .controller('descripcionCtrl', function($scope, ruta) {
   $scope.ruta = ruta;
+})
+
+.controller('desnivelCtrl', function($scope, ruta) {
+  $scope.ruta = ruta;
 });
