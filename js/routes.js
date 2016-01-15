@@ -63,7 +63,7 @@ angular.module('app.routes', [])
     views: {
       'side-menu21': {
         templateUrl: 'templates/zonaNorteYEste.html',
-        controller: 'zonaNorteYEsteCtrl'
+        controller: 'zonaNorteYEsteCtrl',
       }
     }
   })
@@ -79,8 +79,8 @@ angular.module('app.routes', [])
         templateUrl: 'templates/mapa.html',
         controller: 'mapaCtrl',
         resolve: {
-          ruta: function($stateParams, Norte) {
-            return Norte.get($stateParams.id);
+          ruta: function($stateParams) {
+            return $stateParams.id;
           }
         }
       }
@@ -107,8 +107,8 @@ angular.module('app.routes', [])
         templateUrl: 'templates/descripcion.html',
         controller: 'descripcionCtrl',
         resolve: {
-          ruta: function($stateParams, Norte) {
-            return Norte.get($stateParams.id);
+          ruta: function($stateParams) {
+            return $stateParams.id;
           }
         }
       }
@@ -116,6 +116,6 @@ angular.module('app.routes', [])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/side-menu21/presentacion');
+  $urlRouterProvider.otherwise('/side-menu21/norteeste');
 
 });

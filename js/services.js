@@ -4,72 +4,44 @@ angular.module('app.services', [])
 
 }])
 
-.factory('Norte', function() {
-    // Might use a resource here that returns a JSON array
+.factory('Norte', function($http, $q) {
+  // Might use a resource here that returns a JSON array
 
-    // Some fake testing data
-    var norte = [{
-        "id": 1,
-        "inicio": {
-          "name": "Entrada de \"El Monreal\" junto al Camino de Sacedón.",
-          "cordinates": [40.358146, -3.931861]
-        },
-        "fin": {
-          "name": "Entrada de \"El Monreal\" junto al Camino de Sacedón.",
-          "cordinates": [0, 0]
-        },
-        "ruta": "https://docs.google.com/uc?export=download&id=0B4ClGv_KOK5bV2xSYTRwdjA1eTcxRGFhYzI5eHpvTHFia3NV",
-        "distance": 3000,
-        "dificultad": "facil",
-        "name": "el monreal",
-        "perfil": "Irregular, con una subida mantenida de aproximadamente 1,5 km.",
-        "superficie": "100 camino",
-        "desnivel": "img/desnivel_1.png",
-        "mapa": "img/mapa_1.png",
-        "observaciones": "Una buena ruta circular en la que disfrutaremos de la gran belleza de este singular paraje natural que discurre entre encinas, pinos, alcornoques y jaras ,también posee un centro de GREFA para la recuperación del cernicalo. La distancia que hay desde la zona urbana a \"El Monreal\" puede ser aprovechada para realizar el calentamiento previo. Para llegar a esta ruta debemos partir desde la calle Cueva de la Mora y cruzar el puente de la carretera M-506. Al cruzarlo, encontraremos una bifurcación donde están los carteles informativos de las rutas del Parque Regional. En este punto, tomaremos el camino de la derecha (Avenida Villaviciosa de Asturias), más adelante tomaremos el camino que sale a mano derecha. Continuaremos por dicho camino hasta el siguiente que podamos girar a mano izquierda (Camino de Sacedón) y continuaremos por el mismo hasta llegar a la entrada de El Monreal, lugar donde comenzaremos nuestro circuito. El punto de agua más accesible está situado junto al parque canino localizado en el anillo ciclista."
-      }, {
-        "id": 2,
-        "inicio": {
-          "name": "Puerta principal del castillo",
-          "cordinates": [40.353021, -3.924219]
-        },
-        "fin": {
-          "name": "Puerta principal del castillo",
-          "cordinates": [0, 0]
-        },
-        "ruta":"https://docs.google.com/uc?export=download&id=0B4ClGv_KOK5bZW1fSU9ZZ2swT2MwQ0phcW1tU2hiQWxUTnpr",
-        "distance": 8000,
-        "dificultad": "Moderada-dificil",
-        "name": "Ruta del Castillo",
-        "perfil": "Irregular, destacan dos subidas bastante pronunciadas.",
-        "superficie": "100% camino excepto 180m de asfalto.",
-        "desnivel": "img/desnivel_3.png",
-        "desnivel_thumpnail": "img/desnivel_thumpnail_3.png",
+  var deffered = $q.defer();
+  var test = [];
+  var state = {
+    data: [],
+    all: function(callback) {
+      $http.get('js/zona_norte.json').then(function(resp) {
+        this.data=resp.data;
+        test=resp.data;
+        callback(resp.data);
 
-        "mapa": "img/mapa_1.png",
-        "observaciones": "Ruta circular muy recomendable ya que su punto de partida está cercano a la zona urbana y en él se encuentra la Fuente de los Caños donde podremos hidratarnos al finalizar la sesión . Su característica principal son las cuestas pronunciadas que tiene, destacando la del comienzo y la del sexto kilómetro. Es importante destacar las impresionantes vistas de la Sierra de Guadarrama donde ,en días claros, podremos diferenciar algunas de las cimas emblemáticas de la sierra madrileña. Para comenzar esta ruta debemos llegar a la intersección de la calle López Puigcerver y el camino de los Testerales , lugar donde se encuentran la puerta principal del castillo, la fuente de los caños y el cuartel de la guardia civil. Llegados a este punto iniciaremos la ruta. El punto de agua más accesible es la Fuente de los Caños."
-      }
-    ]
+      });
 
-;
-
-    return {
-      all: function() {
-        return norte;
-      },
-      remove: function(chat) {
-        norte.splice(norte.indexOf(chat), 1);
-      },
-      get: function(rutaId) {
-        for (var i = 0; i < norte.length; i++) {
-          if (norte[i].id === parseInt(rutaId)) {
-            return norte[i];
+    },
+    remove: function(chat) {
+      this.data.splice(norte.indexOf(chat), 1);
+    },
+    get: function(rutaId, callback) {
+      this.all(function(all_data){
+        for (var i = 0; i < all_data.length; i++) {
+          if (all_data[i].id === parseInt(rutaId)) {
+             return callback(all_data[i]);
           }
         }
-        return null;
-      }
-    };
-  })
-  .service('BlankService', [function() {
+        callback();
+      });
 
-  }]);
+    }
+  };
+  // function ruta_data (callback) {
+
+
+  // }
+  return state;
+
+
+
+
+});

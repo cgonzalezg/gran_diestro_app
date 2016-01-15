@@ -1,12 +1,21 @@
 <ion-view title="Rutas">
-    <ion-content overflow-scroll="true" padding="true" class="has-header">
-        <ion-list>
-            <ion-item class="item-thumbnail" ng-repeat="ruta in rutas" href="#/side-menu21/descripcion/{{ruta.id}}">
-                <img ng-src="{{ruta.desnivel_thumpnail}}">
-                <h2>{{ruta.name}}</h2>
-                <p>{{ruta.distance}} m</p>
-                <p>{{ruta.dificultad}}</p>
-            </ion-item>
-        </ion-list>
-    </ion-content>
+  <ion-content overflow-scroll="true" padding="true" class="has-header">
+    <ion-list>
+      <div class="list card" ng-repeat="ruta in rutas" href="#/side-menu21/descripcion/{{ruta.id}}">
+        <a class="item item-divider" href="#/side-menu21/descripcion/{{ruta.id}}">
+            {{ruta.name}}
+          </a>
+          <div id="elevation_chart_thumbnail" style="width: 100%; height:100%">
+            <!-- This is a basic Card with some text. -->
+            <!-- <div id="elevation_chart" class="card" style="width: 100%; height:170px"> -->
+
+          </div>
+          <a class="item item-divider" href="#/side-menu21/descripcion/{{ruta.id}}">
+            <p>{{ruta.distance}} m</p>
+            <p>{{ruta.dificultad}}</p>
+          </a>
+        </div>
+      </div>
+    </ion-list>
+  </ion-content>
 </ion-view>

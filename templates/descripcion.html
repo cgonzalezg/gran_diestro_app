@@ -1,12 +1,63 @@
 <ion-view title="{{ruta.name}}">
   <ion-content overflow-scroll="true" padding="true" class="has-header">
-    <div >
-      <h2>{{ruta.name}}</h2>
-      <p>{{ruta.observaciones}}</p>
-    </div>
-    <div class="button-bar">
-      <a class="button icon ion-map button-positive" href="#/side-menu21/mapa/{{ruta.id}}"></a>
-      <a class="button icon-right ion-chevron-right  button-balanced" href="#/side-menu21/desnivel/{{ruta.id}}">Desnivel</a>
+    <div class="card">
+      <div class="item item-divider">
+        <h2>Caracteristicas</h2>
       </div>
+      <!-- <div class="list list-inset"> -->
+      <!-- <div class="row"> -->
+      <div class="item">
+        Distancia
+        <span class="item-note">
+          {{ruta.distance}} m
+        </span>
+        <!-- </a> -->
+      </div>
+
+      <div class="item">
+        Dificultad
+        <span class="item-note">
+          {{ruta.dificultad}}
+        </span>
+      </div>
+
+      <div class="item item-body">
+        Perfil
+
+        <span class="item-note">
+          {{ruta.perfil}}
+        </span>
+      </div>
+
+      <div class="item item-body">
+        Superficie
+
+
+        <span class="item-note">
+          {{ruta.superficie}}
+        </span>
+      </div>
+      <!-- </div> -->
+      <!-- </div> -->
+
+    </div>
+    <div class="card">
+      <div class="item item-divider">
+        <h2>Desnivel</h2>
+      </div>
+      <div id="elevation_chart" style="width: 100%; height: 150">
+      </div>
+    </div>
+    <div class="card">
+      <div class="item item-divider">
+        <h2>Observaciones</h2>
+      </div>
+      <div class="item item-text-wrap">
+        <p>{{ruta.observaciones}}</p>
+      </div>
+    </div>
+    <a class="button button-block icon ion-map button-positive" href="#/side-menu21/mapa/{{ruta.id}}"></a>
+    </div>
+    </div>
   </ion-content>
 </ion-view>
