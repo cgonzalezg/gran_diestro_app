@@ -18,15 +18,15 @@ angular.module('app.controllers', [])
 
 .controller('zonaNorteYEsteCtrl', function($scope, Norte) {
   Norte.all(function(data) {
-    data.forEach(function(item) {
-      // google.load('visualization', '1.0', {'packages':['corechart']});
-      // google.setOnLoadCallback(function(){
-      //     drawCart(item);
-      // });
-      drawCart(item, true);
-
-      // ;
-    });
+    // data.forEach(function(item) {
+    //   // google.load('visualization', '1.0', {'packages':['corechart']});
+    //   // google.setOnLoadCallback(function(){
+    //   //     drawCart(item);
+    //   // });
+    //   drawCart(item, true);
+    //
+    //   // ;
+    // });
     $scope.rutas = data;
   });
 })
@@ -90,10 +90,10 @@ angular.module('app.controllers', [])
 
   $scope.ruta = ruta;
 });
+var elevator = new google.maps.ElevationService();
 
 
 function drawCart(ruta, thumbnail) {
-  var elevator = new google.maps.ElevationService();
 
   var path = ruta.ruta_coor.map(function(coor) {
     return {
@@ -102,7 +102,7 @@ function drawCart(ruta, thumbnail) {
     };
   });
 
-  console.log('coordinates', path.length, ruta.ruta_coor.length);
+  // console.log('coordinates', path.length, ruta.ruta_coor.length);
   elevator.getElevationAlongPath({
     'path': path,
     'samples': 500

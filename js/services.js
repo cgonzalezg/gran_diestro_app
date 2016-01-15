@@ -12,7 +12,7 @@ angular.module('app.services', [])
   var state = {
     data: [],
     all: function(callback) {
-      $http.get('js/zona_norte.json').then(function(resp) {
+      $http.get('js/rutas_coor.json').then(function(resp) {
         this.data=resp.data;
         test=resp.data;
         callback(resp.data);
