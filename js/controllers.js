@@ -124,7 +124,7 @@ function drawCart(ruta, thumbnail) {
     }
 
     if (thumbnail) {
-      var chart_thumbnail = new google.visualization.ColumnChart(document.getElementById('elevation_chart_thumbnail'));
+      var chart_thumbnail = new google.visualization.ColumnChart(document.getElementById('elevation_chart_thumbnail_'+ruta.id));
       chart_thumbnail.draw(data, {
         height: 100,
         // bars: "horizontal",

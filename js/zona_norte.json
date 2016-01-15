@@ -1,5 +1,9 @@
 [ {
     "id": 2,
+    "ascenso":146,
+    "descenso":-146,
+    "pendiente_max": 12.6,
+    "pendiente_media":3.8,
     "inicio": {
       "desnivel_thumpnail": "img/desnivel_1.png",
       "name": "Puerta principal del castillo",
