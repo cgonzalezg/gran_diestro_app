@@ -16,19 +16,36 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('zonaNorteYEsteCtrl', function($scope, Norte) {
-  Norte.all(function(data) {
-    // data.forEach(function(item) {
-    //   // google.load('visualization', '1.0', {'packages':['corechart']});
-    //   // google.setOnLoadCallback(function(){
-    //   //     drawCart(item);
-    //   // });
-    //   drawCart(item, true);
-    //
-    //   // ;
-    // });
-    $scope.rutas = data;
-  });
+.controller('zonaNorteYEsteCtrl', function($scope, $ionicFilterBar, Norte, Rutas) {
+  var filterBarInstance;
+  var rutas = Rutas.all;
+  $scope.rutas = rutas;
+  // $scope.searchText=;
+  $scope.showFilterBar = function() {
+    filterBarInstance = $ionicFilterBar.show({
+      items: rutas,
+      update: function(filteredItems, filterText) {
+        var result = rutas;
+        console.log(filterText, rutas.length);
+        $scope.searchText=filterText;
+      }
+    });
+  };
+  $scope.like = function (id) {
+    $scope.rutas[id].like=true;
+  };
+  $scope.refreshItems = function() {
+    if (filterBarInstance) {
+      filterBarInstance();
+      filterBarInstance = null;
+    }
+
+    $timeout(function() {
+      getItems();
+      $scope.$broadcast('scroll.refreshComplete');
+    }, 1000);
+  };
+
 })
 
 .controller('mapaCtrl', function($scope, $state, $cordovaGeolocation, ruta, Norte) {
@@ -75,20 +92,19 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('descripcionCtrl', function($scope, ruta, Norte) {
+.controller('descripcionCtrl', function($scope, ruta, Norte, Rutas) {
 
+  var data = Rutas.get(ruta);
+  drawCart(data);
+  $scope.ruta = data;
 
-  Norte.get(ruta, function(data) {
-    drawCart(data);
-    $scope.ruta = data;
-  });
 })
 
 .controller('desnivelCtrl', function($scope, ruta) {
 
   // function getPath(elevator, callback) {
 
-  $scope.ruta = ruta;
+  $scope.ruta = ruta.all;
 });
 var elevator = new google.maps.ElevationService();
 
@@ -114,42 +130,24 @@ function drawCart(ruta, thumbnail) {
         status;
       return;
     }
-    // Create a new chart in the elevation_chart DIV.
-
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Sample');
     data.addColumn('number', 'Elevation');
     for (var i = 0; i < elevations.length; i++) {
       data.addRow(['', elevations[i].elevation]);
     }
+    var chart = new google.visualization.ColumnChart(document.getElementById('elevation_chart'));
+    chart.draw(data, {
+      height: 150,
+      weight: 150,
+      // bars: "horizontal",
+      // axisTitlesPosition:'none',
+      legend: 'none',
+      axisFontSize: 10,
+      showCategories: false,
 
-    if (thumbnail) {
-      var chart_thumbnail = new google.visualization.ColumnChart(document.getElementById('elevation_chart_thumbnail_'+ruta.id));
-      chart_thumbnail.draw(data, {
-        height: 100,
-        // bars: "horizontal",
-        // axisTitlesPosition:'none',
-        legend: 'none',
-        axisColor: 'white',
-        axisBackgroundColor: 'white',
-        enableTooltip: false,
-        axisFontSize: 0,
-        showCategories: false // titleY: 'Elevation (m)'
-      });
-    } else {
-      var chart = new google.visualization.ColumnChart(document.getElementById('elevation_chart'));
+    });
 
-      chart.draw(data, {
-        height: 150,
-        weight: 150,
-        // bars: "horizontal",
-        // axisTitlesPosition:'none',
-        legend: 'none',
-        axisFontSize: 10,
-        showCategories: false,
-
-      });
-    }
 
 
     // callback();

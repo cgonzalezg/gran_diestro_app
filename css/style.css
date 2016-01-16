@@ -7,3 +7,6 @@
     margin:10px auto;
     box-shadow:0 3px 25px black;
 }
+.item-footer {
+  background-color: $dark;
+}

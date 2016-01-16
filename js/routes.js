@@ -1,6 +1,6 @@
 angular.module('app.routes', [])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicFilterBarConfigProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -117,5 +117,12 @@ angular.module('app.routes', [])
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/side-menu21/norteeste');
+
+    $ionicFilterBarConfigProvider.theme('positive');
+    $ionicFilterBarConfigProvider.clear('ion-close');
+    $ionicFilterBarConfigProvider.search('ion-search');
+    $ionicFilterBarConfigProvider.backdrop(true);
+    $ionicFilterBarConfigProvider.transition('vertical');
+    $ionicFilterBarConfigProvider.placeholder('Buscar');
 
 });

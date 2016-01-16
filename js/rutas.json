@@ -1,4 +1,4 @@
-[{
+{"rutas":[{
   "id": 1,
   "name": "Ruta del Castillo",
   "ascenso": 146,
@@ -77,4 +77,4 @@
   "perfil": "Irregular, destacan dos subidas bastante pronunciadas.",
   "superficie": "100% camino excepto 180m de asfalto.",
   "observaciones": "Ruta circular muy recomendable ya que su p"
-}]
+}]}
