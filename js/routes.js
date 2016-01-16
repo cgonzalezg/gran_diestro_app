@@ -119,10 +119,11 @@ angular.module('app.routes', [])
   $urlRouterProvider.otherwise('/side-menu21/norteeste');
 
     $ionicFilterBarConfigProvider.theme('positive');
-    $ionicFilterBarConfigProvider.clear('ion-close');
+    $ionicFilterBarConfigProvider.clear('ion-android-close');
     $ionicFilterBarConfigProvider.search('ion-search');
-    $ionicFilterBarConfigProvider.backdrop(true);
-    $ionicFilterBarConfigProvider.transition('vertical');
+    $ionicFilterBarConfigProvider.backdrop(false);
+    $ionicFilterBarConfigProvider.transition('horizontal');
+    $ionicFilterBarConfigProvider.done('ion-android-done');
     $ionicFilterBarConfigProvider.placeholder('Buscar');
 
 });

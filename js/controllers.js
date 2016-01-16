@@ -19,6 +19,7 @@ angular.module('app.controllers', [])
 .controller('zonaNorteYEsteCtrl', function($scope, $ionicFilterBar, Norte, Rutas) {
   var filterBarInstance;
   var rutas = Rutas.all;
+
   $scope.rutas = rutas;
   // $scope.searchText=;
   $scope.showFilterBar = function() {
