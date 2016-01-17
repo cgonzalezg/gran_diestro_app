@@ -2,62 +2,100 @@
   <ion-nav-buttons side="secondary">
     <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()"></button>
   </ion-nav-buttons>
-  <ion-content overflow-scroll="true" padding="true" class="has-header has-footer">
-    <ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="refreshItems()"></ion-refresher>
+  <!-- <div class="float-button" ng-click="isCollapsed = !isCollapsed;">
+    <span class="height-fix">
+      <a ui-sref="leyenda" class="content">
+        <i ng-class="{'ion-plus-round': !isCollapsed, 'ion-close-round': isCollapsed}"></i>
+      </a>
+  </span>
 
-    <ion-list>
-      <div class="list card" ng-repeat="ruta in rutas|filter:{ name: searchText }:strict" href="#/side-menu21/descripcion/{{ruta.id}}">
-        <!-- <a class="item" href="#/side-menu21/descripcion/{{ruta.id}}">
+</div> -->
+
+</div>
+
+<ion-content overflow-scroll="true" padding="true" class="has-header has-footer">
+  <ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="refreshItems()"></ion-refresher>
+
+  <ion-list>
+
+    <div class="list card" ng-repeat="ruta in rutas|filter:{ name: searchText }:strict" href="#/side-menu21/descripcion/{{ruta.id}}">
+      <!-- <a class="item" href="#/side-menu21/descripcion/{{ruta.id}}">
           {{ruta.name}}
 
         </a> -->
-        <!-- <div id="elevation_chart_thumbnail_{{ruta.id}}" style="width: 100%; height:100%">
+      <!-- <div id="elevation_chart_thumbnail_{{ruta.id}}" style="width: 100%; height:100%">
 
           </div> -->
 
-        <div class="item item-image" href="#/side-menu21/descripcion/{{ruta.id}}">
-          <img class="full-image" src="img/{{ruta.img}}" href="#/side-menu21/descripcion/{{ruta.id}}">
-
-        </div>
-        <div class="item item-button-right" href="#/side-menu21/descripcion/{{ruta.id}}">
-          <h2>{{ruta.name}}</h2>
-          <p>
-            <i class="icon ion-android-walk">
-              {{ruta.distance}}
-              m</i>
-          </p>
-          <button class="button button-icon">
-      <i class="icon ion-connection-bars"></i>
-    </button>
-
-        </div>
-        <div class"item-footer">
-          <div class="button-bar item-divider">
-            <a class="button button-icon icon ion-document-text" href="#/side-menu21/descripcion/{{ruta.id}}"></a>
-            <a class="button button-icon icon ion-map" href="#/side-menu21/mapa/{{ruta.id}}"></a>
-            <a class="button button-icon icon ion-ios-heart-outline assertive" href="#/side-menu21/mapa/{{ruta.id}}"></a>
-
-          </div>
-
-        </div>
-
-        <!-- <button class="button button-icon"> -->
-
-        <!-- <a class="button button-icon icon ion-ios-heart assertive"></a> -->
-        <!-- </button> -->
+      <div class="item item-image" href="#/side-menu21/descripcion/{{ruta.id}}">
+        <a href="#/side-menu21/descripcion/{{ruta.id}}"><img class="full-image" src="img/{{ruta.img}}"></a>
 
       </div>
-      <!-- <div class="button-bar">
-        <a class="button">First</a>
-        <a class="button">Second</a>
-        <a class="button">Third</a>
-        </div> -->
+
+      <div class="item item" href="#">
+        <h2>{{ruta.name}}</h2>
+        <p>
+          <i class="icon ion-android-walk">
+            {{ruta.distance}}
+            m</i>
+        </p>
+        <span ng-switch on="ruta.dificultad">
+          <span ng-switch-when="Moderada-dificil">
+            <span class="badge badge-assertive">
+              {{ruta.dificultad}}
+            </span>
+          </span>
+          <div ng-switch-when="Facil">
+            <span class="badge badge-balanced">
+              {{ruta.dificultad}}
+            </span>
+          </div>
+          <div ng-switch-when="Moderada">
+            <!-- code to render a large video block-->
+
+            <span class="badge badge-energized">
+              {{ruta.dificultad}}
+            </span>
+          </div>
+
+          <div ng-switch-default>
+            <!-- code to render the regular video block -->
+
+            <div class="badge badge-balance ">
+              {{ruta.dificultad}}
+            </div>
+          </div>
+        </div>
+
+      </span>
+      <div class"item-footer">
+
+        <div class="button-bar item-divider">
+          <a class="button button-icon icon ion-android-chat" href="#/side-menu21/descripcion/{{ruta.id}}"></a>
+          <a class="button button-icon icon ion-map positive" href="#/side-menu21/mapa/{{ruta.id}}"></a>
+          <i ng-class="{'button button-icon icon ion-ios-heart assertive': loveIt, 'button button-icon icon ion-ios-heart-outline assertive': !loveIt}" ng-click="loveIt = !loveIt; likes = likeClick({{ruta.id}})">
+            <div class="badge badge-positive" ng-if="loveIt">
+              {{likes}}
+            </div>
+          </i>
+
+        </div>
+
+      </div>
+
+      <!-- <button class="button button-icon"> -->
+
+      <!-- <a class="button button-icon icon ion-ios-heart assertive"></a> -->
+      <!-- </button> -->
 
     </div>
-    <!-- <div class="item" href="#/side-menu21/descripcion/{{ruta.id}}"></div> -->
+
   </div>
+  <!-- <div class="item" href="#/side-menu21/descripcion/{{ruta.id}}"></div> -->
+</div>
 </div>
 </ion-list>
+
 </ion-content>
 
 </ion-view>

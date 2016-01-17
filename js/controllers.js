@@ -16,7 +16,7 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('zonaNorteYEsteCtrl', function($scope, $ionicFilterBar, Norte, Rutas) {
+.controller('zonaNorteYEsteCtrl', function($scope, $ionicFilterBar, Rutas) {
   var filterBarInstance;
   var rutas = Rutas.all;
 
@@ -32,8 +32,30 @@ angular.module('app.controllers', [])
       }
     });
   };
-  $scope.like = function (id) {
-    $scope.rutas[id].like=true;
+
+  $scope.showLikes = function (id) {
+    if (!$scope.rutas[id].like) {
+
+      return $scope.rutas[id].likeCount;
+  } else {
+    return ;
+
+  }};
+
+  $scope.likeClick = function (id) {
+    console.log($scope.rutas[id].like, $scope.rutas[id].likeCount);
+    if (!$scope.rutas[id].like) {
+        $scope.rutas[id].like = true;
+        $scope.rutas[id].likeCount += 1;
+        Rutas.addLike(id-1);
+    } else {
+        $scope.rutas[id].like = false;
+        $scope.rutas[id].likeCount -= 1;
+        Rutas.disLike(id-1);
+
+    }
+    return $scope.rutas[id].likeCount;
+    // $scope.customStyle.colorClass = "green";
   };
   $scope.refreshItems = function() {
     if (filterBarInstance) {
@@ -49,7 +71,7 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('mapaCtrl', function($scope, $state, $cordovaGeolocation, ruta, Norte) {
+.controller('mapaCtrl', function($scope, $state, $cordovaGeolocation, ruta) {
   var options = {
     timeout: 10000,
     enableHighAccuracy: true
@@ -93,7 +115,7 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('descripcionCtrl', function($scope, ruta, Norte, Rutas) {
+.controller('descripcionCtrl', function($scope, ruta, Rutas) {
 
   var data = Rutas.get(ruta);
   drawCart(data);

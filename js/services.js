@@ -16,48 +16,18 @@ angular.module('app.services', [])
           }
         }
         return null;
+      },
+
+      addLike: function(id) {
+        itemsRef.child(id).child('likeCount').transaction(function(current_value) {
+          return (current_value || 0) + 1;
+        });
+      },
+      disLike: function(id) {
+        itemsRef.child(id).child('likeCount').transaction(function(current_value) {
+          return (current_value || 0) - 1;
+        });
       }
     };
     return rutas;
-  })
-  .factory('Norte', function($http, $q) {
-    // Might use a resource here that returns a JSON array
-
-    var deffered = $q.defer();
-    var test = [];
-    var state = {
-      data: [],
-      all: function(callback) {
-        $http.get('js/rutas_coor.json').then(function(resp) {
-          this.data = resp.data.rutas;
-          test = resp.data.rutas;
-          callback(resp.data.rutas);
-
-        });
-
-      },
-      remove: function(chat) {
-        this.data.splice(norte.indexOf(chat), 1);
-      },
-      get: function(rutaId, callback) {
-        this.all(function(all_data) {
-          for (var i = 0; i < all_data.length; i++) {
-            if (all_data[i].id === parseInt(rutaId)) {
-              return callback(all_data[i]);
-            }
-          }
-          callback();
-        });
-
-      }
-    };
-    // function ruta_data (callback) {
-
-
-    // }
-    return state;
-
-
-
-
   });
