@@ -1,34 +1,48 @@
-<ion-popover-view>
-  <ion-header-bar>
-    <h1 class="title">Filtros</h1>
-  </ion-header-bar>
+<div class="modal" ng-controller="ModalCtrl">
+  <div class="float-button" ng-click="isCollapsed = !isCollapsed; hideModal()">
+    <span class="height-fix">
+      <a class="content">
+        <i ng-class="{'ion-ios-toggle-outline': !isCollapsed, 'ion-ios-toggle': isCollapsed}"></i>
+      </a>
+    </span>
 
-  <ion-content>
+  </div>
+  <header class="bar">
+    <h1 class="title">Filtros</h1>
+  </header>
+  <ion-content class="has-header">
     <div class="list">
 
-      <label class="item item-input item-select">
-        <div class="input-label">
-          Dificultad
-        </div>
-        <select>
-          <option>dificil</option>
-          <option selected>moderada</option>
-          <option>facil</option>
-        </select>
-      </label>
+      <div class="item item-divider">
+        <h2>Dificultad</h2>
+      </div>
 
+      <ion-toggle toggle-class="toggle-balanced " ng-checked=true ng-model="$parent.facil" ng-change="setFilters(distancia)">
+        Facil
+
+      </ion-toggle>
+
+      <ion-toggle toggle-class="toggle-energized" ng-checked=true ng-model="$parent.moderada" ng-change="setFilters(distancia)">
+        Moderada
+      </ion-toggle>
+      <ion-toggle toggle-class="toggle-assertive" ng-checked=true ng-model="$parent.dificil" ng-change="setFilters(distancia)">
+        Dificil
+      </ion-toggle>
       <div class="list">
         <div class="item item-divider">
-          Distancia
+          <h2>Distancia</h2>
         </div>
 
-        <div class="item range">0
-
-          <input type="range" name="Distancia min=" 0" max=" 100" value=" 50"">
-          10
+        <div class="item range">
+1
+          <input type="range" ng-model="distancia" min="0" max="10000" value="0" ng-change="setFilters(distancia)">
+          {{distancia}}
+          m
         </div>
       </div>
 
     </div>
+    </div>
   </ion-content>
-</ion-popover-view
+</div>
+<!-- </script> -->

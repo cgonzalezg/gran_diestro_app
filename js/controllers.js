@@ -16,93 +16,116 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('zonaNorteYEsteCtrl', function($scope, $ionicFilterBar, Rutas, $ionicPopover, $timeout) {
-  var filterBarInstance;
-  var rutas = Rutas.all;
 
-  // An elaborate, custom popup
-  // .fromTemplateUrl() method
-  $ionicPopover.fromTemplateUrl('templates/desnivel.html', {
-    scope: $scope
-  }).then(function(popover) {
-    $scope.popover = popover;
-  });
-  // var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
-  //
-  //   $scope.popover = $ionicPopover.fromTemplate(template, {
-  //     scope: $scope
-  //   });
+.controller('ModalCtrl', function($scope, $ionicActionSheet, Filtros) {
+    $scope.hideModal = function() {
+      console.log('que pasa');
+      $scope.modal.hide();
 
-  $scope.openPopover = function($event) {
-    $scope.popover.show($event);
-  };
-  $scope.closePopover = function() {
-    $scope.popover.hide();
-  };
-  //Cleanup the popover when we're done with it!
-  $scope.$on('$destroy', function() {
-    $scope.popover.remove();
-  });
-  // Execute action on hide popover
-  $scope.$on('popover.hidden', function() {
-    // Execute action
-  });
-  // Execute action on remove popover
-  $scope.$on('popover.removed', function() {
-    // Execute action
-  });
+      // Filtros.facil = $scope.facil;
 
-  $scope.rutas = rutas;
-  // $scope.searchText=;
-  $scope.showFilterBar = function() {
-    filterBarInstance = $ionicFilterBar.show({
-      items: rutas,
-      update: function(filteredItems, filterText) {
-        var result = rutas;
-        console.log(filterText, rutas.length);
-        $scope.searchText = filterText;
-      }
+    };
+    $scope.removeModal = function() {
+      console.log('estos@@');
+      $scope.modal.remove();
+    };
+    $scope.facil = true;
+    $scope.moderada = true;
+    $scope.dificil = true;
+    $scope.distancia = 0;
+
+    $scope.setFilters = function(distance) {
+
+      console.log('Set filters', distance);
+      Filtros.distancia = distance;
+      if ($scope.facil) Filtros.facil = 'Facil';
+      else Filtros.facil = '*';
+      if ($scope.moderada) Filtros.moderada = 'Moderada';
+      else Filtros.moderada = '*';
+      if ($scope.dificil) Filtros.dificil = 'Moderada-dificil';
+      else Filtros.dificil = '*';
+    };
+    // setFilters($scope.facil);
+
+  })
+  .controller('zonaNorteYEsteCtrl', function($scope, $ionicFilterBar, $ionicModal, Rutas, $timeout, Filtros) {
+    var filterBarInstance;
+    var rutas = Rutas.all;
+    console.log('filtros', Filtros);
+    $scope.filtros = Filtros;
+    $scope.openModal = function() {
+      console.log('show modal', $scope.modalCtrl);
+      console.log('show modal', Filtros);
+      $scope.modalCtrl.show();
+
+    };
+    $scope.distanceFilter = 0;
+
+    $scope.setFilters = function(item) {
+      console.log(item.distance, Filtros.distancia);
+      return item.distance >= Filtros.distancia && (item.dificultad === Filtros.facil ||
+        item.dificultad === Filtros.moderada ||
+        item.dificultad === Filtros.dificil);
+    };
+
+    $ionicModal.fromTemplateUrl('templates/desnivel.html', function(modal) {
+      console.log('mierda', modal.facil);
+      $scope.modalCtrl = modal;
+    }, {
+      animation: 'slide-in-up', //'slide-left-right', 'slide-in-up', 'slide-right-left'
+      focusFirstInput: true
     });
-  };
+    $scope.rutas = rutas;
+    // $scope.searchText=;
+    $scope.showFilterBar = function() {
+      filterBarInstance = $ionicFilterBar.show({
+        items: rutas,
+        update: function(filteredItems, filterText) {
+          var result = rutas;
+          console.log(filterText, rutas.length);
+          $scope.searchText = filterText;
+        }
+      });
+    };
 
-  $scope.showLikes = function(id) {
-    if (!$scope.rutas[id].like) {
+    $scope.showLikes = function(id) {
+      if (!$scope.rutas[id].like) {
 
+        return $scope.rutas[id].likeCount;
+      } else {
+        return;
+
+      }
+    };
+
+    $scope.likeClick = function(id) {
+      console.log($scope.rutas[id].like, $scope.rutas[id].likeCount);
+      if (!$scope.rutas[id].like) {
+        $scope.rutas[id].like = true;
+        $scope.rutas[id].likeCount += 1;
+        Rutas.addLike(id - 1);
+      } else {
+        $scope.rutas[id].like = false;
+        $scope.rutas[id].likeCount -= 1;
+        Rutas.disLike(id - 1);
+
+      }
       return $scope.rutas[id].likeCount;
-    } else {
-      return;
+      // $scope.customStyle.colorClass = "green";
+    };
+    $scope.refreshItems = function() {
+      if (filterBarInstance) {
+        filterBarInstance();
+        filterBarInstance = null;
+      }
 
-    }
-  };
+      $timeout(function() {
+        getItems();
+        $scope.$broadcast('scroll.refreshComplete');
+      }, 1000);
+    };
 
-  $scope.likeClick = function(id) {
-    console.log($scope.rutas[id].like, $scope.rutas[id].likeCount);
-    if (!$scope.rutas[id].like) {
-      $scope.rutas[id].like = true;
-      $scope.rutas[id].likeCount += 1;
-      Rutas.addLike(id - 1);
-    } else {
-      $scope.rutas[id].like = false;
-      $scope.rutas[id].likeCount -= 1;
-      Rutas.disLike(id - 1);
-
-    }
-    return $scope.rutas[id].likeCount;
-    // $scope.customStyle.colorClass = "green";
-  };
-  $scope.refreshItems = function() {
-    if (filterBarInstance) {
-      filterBarInstance();
-      filterBarInstance = null;
-    }
-
-    $timeout(function() {
-      getItems();
-      $scope.$broadcast('scroll.refreshComplete');
-    }, 1000);
-  };
-
-})
+  })
 
 .controller('mapaCtrl', function($scope, $state, $cordovaGeolocation, ruta, Rutas) {
   var options = {
