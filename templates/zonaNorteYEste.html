@@ -1,15 +1,17 @@
 <ion-view title="Rutas">
+
   <ion-nav-buttons side="secondary">
     <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()"></button>
   </ion-nav-buttons>
-  <!-- <div class="float-button" ng-click="isCollapsed = !isCollapsed;">
+
+  <div class="float-button" ng-click="isCollapsed = !isCollapsed; openPopover($event)">
     <span class="height-fix">
       <a ui-sref="leyenda" class="content">
-        <i ng-class="{'ion-plus-round': !isCollapsed, 'ion-close-round': isCollapsed}"></i>
+        <i ng-class="{'ion-ios-toggle-outline': !isCollapsed, 'ion-ios-toggle': isCollapsed}"></i>
       </a>
   </span>
 
-</div> -->
+</div>
 
 </div>
 
@@ -97,6 +99,11 @@
 </ion-list>
 
 </ion-content>
+<div class="bar bar-footer bar-positive">
+  <!-- <button class="button button-clear pull-right" ng-click="openPopover($event)">Filters</button> -->
+
+</div>
+
 
 </ion-view>
 

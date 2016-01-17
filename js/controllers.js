@@ -16,9 +16,41 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('zonaNorteYEsteCtrl', function($scope, $ionicFilterBar, Rutas) {
+.controller('zonaNorteYEsteCtrl', function($scope, $ionicFilterBar, Rutas, $ionicPopover, $timeout) {
   var filterBarInstance;
   var rutas = Rutas.all;
+
+  // An elaborate, custom popup
+  // .fromTemplateUrl() method
+  $ionicPopover.fromTemplateUrl('templates/desnivel.html', {
+    scope: $scope
+  }).then(function(popover) {
+    $scope.popover = popover;
+  });
+  // var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
+  //
+  //   $scope.popover = $ionicPopover.fromTemplate(template, {
+  //     scope: $scope
+  //   });
+
+  $scope.openPopover = function($event) {
+    $scope.popover.show($event);
+  };
+  $scope.closePopover = function() {
+    $scope.popover.hide();
+  };
+  //Cleanup the popover when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.popover.remove();
+  });
+  // Execute action on hide popover
+  $scope.$on('popover.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove popover
+  $scope.$on('popover.removed', function() {
+    // Execute action
+  });
 
   $scope.rutas = rutas;
   // $scope.searchText=;
@@ -28,30 +60,31 @@ angular.module('app.controllers', [])
       update: function(filteredItems, filterText) {
         var result = rutas;
         console.log(filterText, rutas.length);
-        $scope.searchText=filterText;
+        $scope.searchText = filterText;
       }
     });
   };
 
-  $scope.showLikes = function (id) {
+  $scope.showLikes = function(id) {
     if (!$scope.rutas[id].like) {
 
       return $scope.rutas[id].likeCount;
-  } else {
-    return ;
+    } else {
+      return;
 
-  }};
+    }
+  };
 
-  $scope.likeClick = function (id) {
+  $scope.likeClick = function(id) {
     console.log($scope.rutas[id].like, $scope.rutas[id].likeCount);
     if (!$scope.rutas[id].like) {
-        $scope.rutas[id].like = true;
-        $scope.rutas[id].likeCount += 1;
-        Rutas.addLike(id-1);
+      $scope.rutas[id].like = true;
+      $scope.rutas[id].likeCount += 1;
+      Rutas.addLike(id - 1);
     } else {
-        $scope.rutas[id].like = false;
-        $scope.rutas[id].likeCount -= 1;
-        Rutas.disLike(id-1);
+      $scope.rutas[id].like = false;
+      $scope.rutas[id].likeCount -= 1;
+      Rutas.disLike(id - 1);
 
     }
     return $scope.rutas[id].likeCount;
@@ -71,47 +104,48 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('mapaCtrl', function($scope, $state, $cordovaGeolocation, ruta) {
+.controller('mapaCtrl', function($scope, $state, $cordovaGeolocation, ruta, Rutas) {
   var options = {
     timeout: 10000,
     enableHighAccuracy: true
   };
 
   console.log('ruta', ruta);
-  Norte.get(ruta, function(data) {
-    $scope.ruta = data;
-    var latLng = new google.maps.LatLng(data.ruta_coor[0].lat, data.ruta_coor[0].lon);
-    var marker = new google.maps.Marker({
-      position: latLng,
-      map: map,
-      title: data.name
-    });
-    var path = data.ruta_coor.map(function(coor) {
-      return {
-        lat: coor.lat,
-        lng: coor.lon
-      };
-    });
-    var mapOptions = {
-      center: latLng,
-      zoom: 14,
-      mapTypeId: google.maps.MapTypeId.TERRAIN
-    };
+  $scope.ruta = Rutas.get(ruta);
 
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    new google.maps.Polyline({
-      path: path,
-      strokeColor: '#0000CC',
-      opacity: 0.4,
-      map: map
-    });
-    // $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
-    //
-    //
-    // }, function(error) {
-    //   console.log("Could not get location");
-    // });
+  // $scope.ruta = data;
+  var latLng = new google.maps.LatLng($scope.ruta.ruta_coor[0].lat, $scope.ruta.ruta_coor[0].lon);
+  var marker = new google.maps.Marker({
+    position: latLng,
+    map: map,
+    title: $scope.ruta.name
   });
+  var path = $scope.ruta.ruta_coor.map(function(coor) {
+    return {
+      lat: coor.lat,
+      lng: coor.lon
+    };
+  });
+  var mapOptions = {
+    center: latLng,
+    zoom: 14,
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+
+  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  new google.maps.Polyline({
+    path: path,
+    strokeColor: '#0000CC',
+    opacity: 0.4,
+    map: map
+  });
+  // $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
+  //
+  //
+  // }, function(error) {
+  //   console.log("Could not get location");
+  // });
+
 
 })
 

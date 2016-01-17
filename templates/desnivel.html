@@ -1,9 +1,34 @@
-<ion-view title="{{ruta.name}}">
-  <ion-content overflow-scroll="true" padding="true" class="has-header">
+<ion-popover-view>
+  <ion-header-bar>
+    <h1 class="title">Filtros</h1>
+  </ion-header-bar>
 
-    <div >
-      <!-- <img ng-src="{{ruta.desnivel}}"> -->
-      <!-- <p>{{ruta.observaciones}}</p> -->
+  <ion-content>
+    <div class="list">
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Dificultad
+        </div>
+        <select>
+          <option>dificil</option>
+          <option selected>moderada</option>
+          <option>facil</option>
+        </select>
+      </label>
+
+      <div class="list">
+        <div class="item item-divider">
+          Distancia
+        </div>
+
+        <div class="item range">0
+
+          <input type="range" name="Distancia min=" 0" max=" 100" value=" 50"">
+          10
+        </div>
+      </div>
+
     </div>
   </ion-content>
-</ion-view>
+</ion-popover-view
